@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lnlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".View.Activity_Project">
+
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="PROJETO"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Nome  do Projeto"
+        android:textColor="@color/purple_500" />
+
+    <EditText
+        android:id="@+id/edt_nome_projeto"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Digite o nome do projeto..."
+        android:inputType="textPersonName"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/txtv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Data de início"
+        android:textColor="@color/purple_500" />
+
+    <EditText
+        android:id="@+id/edt_data_inicio"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="dd/mm/aaaa"
+        android:inputType="textPersonName"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/txtv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Data de término"
+        android:textColor="@color/purple_500" />
+
+    <EditText
+        android:id="@+id/edt_data_termino"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="dd/mm/aaaa"
+        android:inputType="textPersonName"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/txtv4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Valor do Projeto (R$)"
+        android:textColor="@color/purple_500" />
+
+    <EditText
+        android:id="@+id/edt_valor_projeto"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="0,00"
+        android:inputType="textPersonName"
+        android:paddingLeft="8dp" />
+
+    <TextView
+        android:id="@+id/txtv5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Risco do Projeto"
+        android:textColor="@color/purple_500" />
+
+    <Spinner
+        android:id="@+id/spinner_risco"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp" />
+
+    <TextView
+        android:id="@+id/txtv6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Participantes"
+        android:textColor="@color/purple_500" />
+
+    <EditText
+        android:id="@+id/edt_participantes"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Participante 1; Participante 2; ...."
+        android:inputType="textPersonName"
+        android:paddingLeft="8dp" />
+
+    <Button
+        android:id="@+id/btn_concluir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="CONCLUIR" />
+
+</LinearLayout>

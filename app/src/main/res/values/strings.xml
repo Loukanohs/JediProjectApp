@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JediProjects</string>
+
+    <string-array name="select_risco">
+        <item>0 - BAIXO</item>
+        <item>1 - MÉDIO</item>
+        <item>2 - ALTO</item>
+    </string-array>
+</resources>
