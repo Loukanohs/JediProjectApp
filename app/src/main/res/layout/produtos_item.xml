@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/border_item"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_nome_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/border_item"
+        android:backgroundTint="@color/purple_700"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp"
+        android:text="PROJETO A"
+        android:textColor="@color/white"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/txt_data_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="8dp"
+        android:text="Dt. Inicio: 01/01/2000  -  Dt.Término: 01/01/2020"
+        android:textColor="@color/purple_500" />
+
+    <TextView
+        android:id="@+id/txt_valor_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="8dp"
+        android:text="VALOR: R$ 0"
+        android:textColor="@color/purple_200" />
+
+    <TextView
+        android:id="@+id/txt_risco_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="8dp"
+        android:text="RISCO: 0 - BAIXO"
+        android:textColor="@color/teal_200" />
+
+    <TextView
+        android:id="@+id/txt_participantes_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="8dp"
+        android:text="PARTICIPANTES: FULANO; CICLANO;"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_simular"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/purple_200"
+            android:text="SIMULAR INVESTIMENTO"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_excluir"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:backgroundTint="@color/delete"
+            android:padding="8dp"
+            android:textSize="12sp"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconPadding="8dp"
+            app:iconSize="35dp"
+            app:iconTint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/btn_editar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="8dp"
+            android:backgroundTint="@color/purple_500"
+            android:padding="8dp"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:iconPadding="8dp"
+            app:iconSize="35dp"
+            app:iconTint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package br.com.unside.jediprojects.Model;
+package br.com.unside.jediprojects.model;
 
 
 import java.util.Date;
@@ -10,7 +10,7 @@ public class Projeto {
     private Date dataInicio;
     private Date dataTermino;
     private int riscoProjeto;
-    private float calorProjeto;
+    private float valorProjeto;
     private String listaParticipante;
 
 
@@ -57,12 +57,12 @@ public class Projeto {
         this.riscoProjeto = riscoProjeto;
     }
 
-    public float getCalorProjeto() {
-        return calorProjeto;
+    public float getValorProjeto() {
+        return valorProjeto;
     }
 
-    public void setCalorProjeto(float calorProjeto) {
-        this.calorProjeto = calorProjeto;
+    public void setValorProjeto(float valorProjeto) {
+        this.valorProjeto = valorProjeto;
     }
 
     public String getListaParticipante() {
