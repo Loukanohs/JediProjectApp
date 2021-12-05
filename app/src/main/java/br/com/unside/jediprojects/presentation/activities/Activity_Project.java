@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.rtoshiro.util.format.MaskFormatter;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +38,7 @@ public class Activity_Project extends AppCompatActivity {
     //variaveis de referencia ao front
     private TextView txt_titulo;
     private EditText edt_nome_projeto, edt_data_inicio, edt_data_termino,
-            edt_valor_projeto,edt_participantes;
+            edt_participantes, edt_valor_projeto;
     private Button btn_concluir,btn_voltar;
     private Spinner spinner_risco;
 
@@ -64,7 +68,10 @@ public class Activity_Project extends AppCompatActivity {
         edt_nome_projeto = findViewById(R.id.edt_nome_projeto);
         edt_data_inicio = findViewById(R.id.edt_data_inicio);
         edt_data_termino = findViewById(R.id.edt_data_termino);
+
         edt_valor_projeto = findViewById(R.id.edt_valor_projeto);
+        edt_valor_projeto.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
         edt_participantes = findViewById(R.id.edt_participantes);
         spinner_risco = findViewById(R.id.spinner_risco);
         btn_concluir = findViewById(R.id.btn_concluir);
@@ -75,6 +82,8 @@ public class Activity_Project extends AppCompatActivity {
                 R.array.select_risco, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_risco.setAdapter(adapter);
+        adicionarMascaraData();
+
 
         //Ações dos botões
         //Voltar ao menu
@@ -96,6 +105,7 @@ public class Activity_Project extends AppCompatActivity {
 
         //caso seja edit
         if(isEdit){
+            //receber o uuid do obj que vai ser editado
             uuidProject = getIntent().getStringExtra("uuidProject");
             preencherDados();
             txt_titulo.setText("EDITAR PROJETO");
@@ -104,6 +114,13 @@ public class Activity_Project extends AppCompatActivity {
             txt_titulo.setText("CADASTRAR PROJETO");
         }
     }
+
+
+    /**Como so exite um objeto no banco com mesmo uuid, ele vai resgatar esse objeto, porem se alguem
+     *apagar esse objeto um pouco antes de resgatar esse objeto pra edicao, ele voltara
+     *ao menu. Caso alguem apague antes de terminar de editar, ao concluir a edicao,
+     *o objeto será criado novamente com o mesmo uuid anterior, evitando que alguem
+     * delete algo que outra pessoa está usando **/
     private void preencherDados(){
 
         //faz uma requisicao no banco do firebase procurando umm uuid recebido, caso seja edit
@@ -111,22 +128,18 @@ public class Activity_Project extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                /**como so exite um com mesmo uuid, ele vai resgatar esse objeto, porem se alguem
-                 *apagar esse objeto um pouco antes de resgatar esse objeto pra edicao, ele voltara
-                 *ao menu. Caso alguem apague antes de terminar de editar, ao concluir a edicao,
-                 *o objeto será criado novamente com o mesmo uuid anterior, evitando que alguem
-                 * delete algo que outra pessoa está usando **/
-
+                //resgata o objeto encontrado no banco
                 for(DataSnapshot objeto : snapshot.getChildren()){
                     obj_projeto = objeto.getValue(Projeto.class);
                 }
+
+                //se encontrar um objeto com esse uuid, ele irá preencher a tela com os dados dele
                 if(obj_projeto!=null) {
-                    //se encontrar um objeto com esse uuid, ele irá preencher a tela com os dados dele
                     edt_nome_projeto.setText(obj_projeto.getNomeProjeto());
-                    edt_data_inicio.setText(obj_projeto.getDataInicio().toString());
-                    edt_data_termino.setText(obj_projeto.getDataTermino().toString());
-                    edt_valor_projeto.setText("" + obj_projeto.getValorProjeto());
+                    SimpleDateFormat dtformat = new SimpleDateFormat("dd/MM/yyyy");
+                    edt_data_inicio.setText(dtformat.format(obj_projeto.getDataInicio()));
+                    edt_data_termino.setText(dtformat.format(obj_projeto.getDataTermino()));
+                    edt_valor_projeto.setText(""+obj_projeto.getValorProjeto());
                     edt_participantes.setText(obj_projeto.getListaParticipante());
                     spinner_risco.setSelection(obj_projeto.getRiscoProjeto());
                 }else{
@@ -147,17 +160,20 @@ public class Activity_Project extends AppCompatActivity {
 
     }
 
-
+    /**SIM. A funcao de inserir e editar é identica. O que muda é que ao editar, esterei atualizando
+     * um projeto com uuid existente, e ao inserir um novo, eu crio um novo uuid para ele.
+     * Esse processo é realizado ao resgatar os valores*/
     private void insert_edit_projeto(){
-
-        /**SIM. A funcao de inserir e editar é identica, porem muda que ao editar, esterei atualizando
-         * um projeto com uuid existente, e ao inserir um novo, eu crio um novo uuid para ele.
-         * Esse processo é realizado ao resgatar os valores*/
         if(resgatarValores()){
             databaseReference.child("projeto").child(obj_projeto.getUuidProjeto()).setValue(obj_projeto, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                    Toast.makeText(Activity_Project.this, "PROJETO CADASTRADO COM SUCESSO!", Toast.LENGTH_LONG).show();
+                    String mensagem;
+
+                    if(isEdit)mensagem = "PROJETO EDITADO COM SUCESSO!";
+                    else  mensagem = "PROJETO CADASTRADO COM SUCESSO!";
+
+                    Toast.makeText(Activity_Project.this, mensagem, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Activity_Project.this, Activity_Home.class);
                     startActivity(intent);
                     finish();
@@ -165,6 +181,10 @@ public class Activity_Project extends AppCompatActivity {
             });
         }
     }
+
+    /**Resgata os valores dos EditText e verifica se estão corretos
+     * e totalmente preenchidos
+     */
     private boolean resgatarValores()  {
         if(isPreenchidos()){
             //caso seja cadastro, gero um UUID novo
@@ -175,10 +195,13 @@ public class Activity_Project extends AppCompatActivity {
             //preenchendo o objeto com as informcaoes digitadas
             obj_projeto.setNomeProjeto(edt_nome_projeto.getText().toString());
 
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            //Configurar formato de data dd/mm/yyyy
+            SimpleDateFormat dtformat = new SimpleDateFormat("dd/MM/yyyy");
+            dtformat.setLenient(false);
+            //validacao de datas
             try{
                 String dtini = edt_data_inicio.getText().toString();
-                obj_projeto.setDataInicio(format.parse(dtini));
+                obj_projeto.setDataInicio(dtformat.parse(dtini));
             }catch (ParseException e){
                 e.printStackTrace();
                 edt_data_inicio.requestFocus();
@@ -187,7 +210,7 @@ public class Activity_Project extends AppCompatActivity {
             }
             try{
                 String dtfn = edt_data_termino.getText().toString();
-                obj_projeto.setDataTermino(format.parse(dtfn));
+                obj_projeto.setDataTermino(dtformat.parse(dtfn));
             }catch (ParseException e){
                 e.printStackTrace();
                 edt_data_termino.requestFocus();
@@ -195,10 +218,21 @@ public class Activity_Project extends AppCompatActivity {
                 return false;
             }
 
+            //validadao de dados de entrada.
+            // Double nao aceita separacao da casa decimal com ','
+            try{
+                obj_projeto.setValorProjeto(Double.parseDouble(edt_valor_projeto.getText().toString()));
+            }catch (Exception e){
+                e.printStackTrace();
+                edt_valor_projeto.requestFocus();
+                Toast.makeText(Activity_Project.this, "VALOR INVÁLIDA (USE . EM VEZ DE ,)", Toast.LENGTH_LONG).show();
+                return false;
+            }
 
-            obj_projeto.setValorProjeto(Float.parseFloat(edt_valor_projeto.getText().toString()));
             obj_projeto.setRiscoProjeto(spinner_risco.getSelectedItemPosition());
             obj_projeto.setListaParticipante(edt_participantes.getText().toString());
+
+            //se tudo tiver ok, posso cadastrar no banco
             return true;
         }else{
             Toast.makeText(Activity_Project.this, "TODOS OS CAMPOS DEVEM ESTÁ PREENCHIDOS!", Toast.LENGTH_LONG).show();
@@ -206,7 +240,7 @@ public class Activity_Project extends AppCompatActivity {
         }
     }
 
-    /*Verifica se todos os campos estao preenchidos, ou seja, se nenhum se encontra vazio
+    /**Verifica se todos os campos estao preenchidos, ou seja, se nenhum se encontra vazio
     e gera um focus nele*/
     private boolean isPreenchidos(){
         if(TextUtils.isEmpty(edt_nome_projeto.getText().toString())){
@@ -231,4 +265,16 @@ public class Activity_Project extends AppCompatActivity {
         }
         return true;
     }
+
+    /**utilizei uma biblioteca externa para criar a mascar.
+     * LINK: https://github.com/rtoshiro/MaskFormatter
+     */
+    private void adicionarMascaraData(){
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher mtw1 = new MaskTextWatcher(edt_data_inicio, smf);
+        edt_data_inicio.addTextChangedListener(mtw1);
+        MaskTextWatcher mtw2 = new MaskTextWatcher(edt_data_termino, smf);
+        edt_data_termino.addTextChangedListener(mtw2);
+    }
+
 }

@@ -10,7 +10,7 @@ public class Projeto {
     private Date dataInicio;
     private Date dataTermino;
     private int riscoProjeto;
-    private float valorProjeto;
+    private double valorProjeto;
     private String listaParticipante;
 
 
@@ -57,11 +57,11 @@ public class Projeto {
         this.riscoProjeto = riscoProjeto;
     }
 
-    public float getValorProjeto() {
+    public double getValorProjeto() {
         return valorProjeto;
     }
 
-    public void setValorProjeto(float valorProjeto) {
+    public void setValorProjeto(double valorProjeto) {
         this.valorProjeto = valorProjeto;
     }
 

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,7 @@ import br.com.unside.jediprojects.R;
 public class Activity_Home extends AppCompatActivity {
 
 
-    private Button btn_cadastrar, btn_atualizar;
+    private Button btn_cadastrar, btn_atualizar,btn_info;
     private RecyclerView rv_lista_projetos;
 
     private List<Projeto> listProjetos = new ArrayList<>();
@@ -44,6 +46,7 @@ public class Activity_Home extends AppCompatActivity {
         //referenciar variaveis
         btn_cadastrar = findViewById(R.id.btn_cadastrar);
         btn_atualizar = findViewById(R.id.btn_atualizar);
+        btn_info = findViewById(R.id.btn_info);
         rv_lista_projetos = findViewById(R.id.rv_lista_projetos);
 
         //definir o tipo ded exibicao da lista
@@ -67,7 +70,24 @@ public class Activity_Home extends AppCompatActivity {
         btn_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(Activity_Home.this,"LISTA ATUALIZADA!!",Toast.LENGTH_SHORT).show();
                 listarProjetos();
+            }
+        });
+
+        btn_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(Activity_Home.this);
+                dialog.setTitle("JEDI INC. PROJECTS")
+                        .setMessage("FRANCISCO LUCAS LIMA SENA. GITHUB: https://github.com/Loukanohs");
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
             }
         });
     }

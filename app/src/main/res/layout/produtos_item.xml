@@ -34,7 +34,8 @@
         android:layout_marginRight="8dp"
         android:paddingLeft="8dp"
         android:text="Dt. Inicio: 01/01/2000  -  Dt.Término: 01/01/2020"
-        android:textColor="@color/purple_500" />
+        android:textColor="@color/purple_500"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_valor_lista"
@@ -45,7 +46,8 @@
         android:layout_marginRight="8dp"
         android:paddingLeft="8dp"
         android:text="VALOR: R$ 0"
-        android:textColor="@color/purple_200" />
+        android:textColor="@color/purple_200"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_risco_lista"
@@ -56,7 +58,8 @@
         android:layout_marginRight="8dp"
         android:paddingLeft="8dp"
         android:text="RISCO: 0 - BAIXO"
-        android:textColor="@color/teal_200" />
+        android:textColor="@color/teal_200"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/txt_participantes_lista"
@@ -67,8 +70,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:paddingLeft="8dp"
-        android:text="PARTICIPANTES: FULANO; CICLANO;"
-        android:textColor="@color/black" />
+        android:text="PARTICIPANTES: FULANO; CICLANO;" />
 
     <LinearLayout
         android:layout_width="match_parent"
