@@ -189,13 +189,13 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosAdapter.ViewHo
                             }
                         }
                         if(isDelet){
-                            listProjetos.clear();
                             Toast.makeText(contextAd,"PROJETO DELETADO COM SUCESSO!",Toast.LENGTH_LONG).show();
                         }
 
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+
                         Toast.makeText(contextAd,"ERRO AO DELETAR! ESTOU ATUALIZANDO A PAGINA PARA VERIFICAR SE OUTRA PESSOAS JA DELETOU",Toast.LENGTH_LONG).show();
                     }
                 });
@@ -207,6 +207,7 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosAdapter.ViewHo
             }
         });
         builder.show();
+        notifyDataSetChanged();
 
     }
 
@@ -219,14 +220,14 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosAdapter.ViewHo
         AlertDialog.Builder simularDialog = new AlertDialog.Builder(contextAd);
         simularDialog.setTitle("SIMULAR INVESTIMENTO")
                 .setMessage("Simular Investimento no projeto '"+listProjetos.get(position).getNomeProjeto()
-                        +"', insira um valor maior ou igual a R$ "+listProjetos.get(position).getValorProjeto()+"!");
+                        +"'. Insira um valor maior ou igual a R$ "+listProjetos.get(position).getValorProjeto()+" no campo abaixo!");
 
         //CRIACAO DO EDITTEXT DO DIALOGO
         final EditText edt_invest = new EditText(contextAd);
-
         edt_invest.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         edt_invest.setPadding(50,20,50,20);
         simularDialog.setView(edt_invest);
+        edt_invest.requestFocus();
 
         simularDialog.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -282,7 +283,6 @@ public class ProjetosAdapter extends RecyclerView.Adapter<ProjetosAdapter.ViewHo
             }
         });
         simularDialog.show();
+        notifyDataSetChanged();
     }
-
-
 }

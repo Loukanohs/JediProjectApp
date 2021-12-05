@@ -29,7 +29,7 @@ import br.com.unside.jediprojects.R;
 public class Activity_Home extends AppCompatActivity {
 
 
-    private Button btn_cadastrar, btn_atualizar,btn_info;
+    private Button btn_cadastrar, btn_info;
     private RecyclerView rv_lista_projetos;
 
     private List<Projeto> listProjetos = new ArrayList<>();
@@ -45,7 +45,6 @@ public class Activity_Home extends AppCompatActivity {
 
         //referenciar variaveis
         btn_cadastrar = findViewById(R.id.btn_cadastrar);
-        btn_atualizar = findViewById(R.id.btn_atualizar);
         btn_info = findViewById(R.id.btn_info);
         rv_lista_projetos = findViewById(R.id.rv_lista_projetos);
 
@@ -66,21 +65,12 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
 
-        //atualiza a lista de projetos
-        btn_atualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Activity_Home.this,"LISTA ATUALIZADA!!",Toast.LENGTH_SHORT).show();
-                listarProjetos();
-            }
-        });
-
         btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Activity_Home.this);
                 dialog.setTitle("JEDI INC. PROJECTS")
-                        .setMessage("FRANCISCO LUCAS LIMA SENA. GITHUB: https://github.com/Loukanohs");
+                        .setMessage("FRANCISCO LUCAS LIMA SENA.        GITHUB: https://github.com/Loukanohs");
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -96,13 +86,14 @@ public class Activity_Home extends AppCompatActivity {
     //funcao que preenche a lista com os objetos do banco de dados
     private void listarProjetos(){
         //limpo a lista pra evitar erros
-        listProjetos.clear();
+
 
         //metodo que retorna todos os objetos do nó referente a 'projeto' no banco de dados do firebase
         databaseReference.child("projeto").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //adiciono os objetos a minha lista de Projetos
+                listProjetos.clear();
                 for(DataSnapshot objeto : snapshot.getChildren()){
                     listProjetos.add(objeto.getValue(Projeto.class));
                 }
@@ -120,4 +111,5 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
     }
+
 }
